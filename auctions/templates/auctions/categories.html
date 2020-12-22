@@ -1,0 +1,13 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+{% if message %}
+        <div>{{ message }}</div>
+{% endif %}
+    <h2>Categories</h2>
+    {% for a in all %}
+    
+    <a href="{% url 'categorypage' a %}">{{ a }}</a><br>
+            {% endfor %}
+        
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+{% if message %}
+        <div>{{ message }}</div>
+{% endif %}
+    <h2>Closed Listings</h2>
+    {% for a in all %}
+    <table> 
+        <td><img src="{{ a.picture }}" alt = "user image" height="280", width="320"></td>
+        <td><h3>{{ a.name }}</h3>
+            <h4> Selling Price: ${{a.price}}</h4>
+            <h5>Category: {{ a.category }}</h5><br>
+            <h6> Sold on: {{ a.closed_date }}</h6>
+            <h6> Sold By: {{ a.seller }}</h6>
+            <h6> Bought By: {{ a.buyer }}</h6>
+            <h6> Description: {{ a.description }}</h6></td><br>         
+            {% endfor %}
+        </tr>
+    </table>    
+{% endblock %}

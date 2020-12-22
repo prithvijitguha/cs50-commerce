@@ -1,0 +1,21 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+{% if message %}
+        <div>{{ message }}</div>
+{% endif %}
+{% for a in item %}
+<h2>{{ title }}</h2>
+<table> 
+    <td><img src="{{ a.picture }}" alt = "user image" height="280", width="320"></td>
+    <td><h3>{{ a.name }}</h3>
+        <h4> Price: ${{a.price}}</h4><br><br>
+        <h6>created: {{ a.listed_date }}</h6>
+        <a href="{% url 'listing' a.id %}"><button class="btn-primary" type="submit">View</button></a>
+        </td>
+    </tr>
+</table>  
+
+
+{% endfor %}      
+{% endblock %}

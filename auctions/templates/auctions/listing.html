@@ -1,0 +1,56 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+{% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li class="{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+{% for a in item %}
+<h3>{{ a.name }}</h3>
+<img src="{{ a.picture }}" alt = "user image" height="280", width="320">
+<h4> Price: ${{a.price}}</h4>
+<h5>Category: {{ a.category }} </h5>
+<h6>created: {{ a.listed_date }}</h6>
+<h6>Seller Name: {{ a.seller }} </h6><br>
+{% if close %}
+This bid is closed
+{% endif %}
+      {% if owner %}
+      <a href="{% url 'close' a.id %}"><button class="btn-primary" type="submit">Close Auction</button></a>
+      {% endif %}
+<h4>Highest Bid ${{ highest }}</h4>
+<h6>{{ numberbids }} bid(s) so far</h6>
+<form action="{% url 'bid' a.id %}" method="post">
+{{ form2 }}   
+    {% csrf_token %}
+<button class="btn-primary" type="submit">Submit Bid</button>
+</form>
+{% if user.is_authenticated %}
+<p>
+    {% if added %}
+    <a href="{% url 'addwatchlist' a.id %}"><button class="btn-primary" type="submit">Add to Watchlist</button></a>
+    {% else %}
+    <a href="{% url 'removewatchlist' a.id %}"><button class="btn-primary" type="submit">Delete from Watchlist</button></a>
+    {% endif %}
+</p>
+<form action="{% url 'addcomment' a.id %}" method="post">
+    {{ form }}   
+    {% csrf_token %}
+<button class="btn-primary" type="submit">Submit</button>
+</form>
+{% else %}
+<p>You need to be signed in to comment</p>
+{% endif %}   
+{% endfor %}
+{% for c in comments %}
+<div>
+    <h4>{{ c.body }}</h4>
+    <h5>&nbsp;&nbsp;&nbsp;user: {{ c.name }}</h6>
+    <h6>&nbsp;&nbsp;&nbsp; {{ c.date }}</h6>
+</div><br>
+{% endfor %}
+{% endblock %}
+
